@@ -8,6 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Separator from '../components/Separator';
 import ToggleButton from '../components/ToggleButton';
 import { Colors } from '../constants/Colors';
+import Dimensions from '../constants/Dimensions';
 import { Fonts } from '../constants/Fonts';
 import { Images } from '../constants/Images';
 
@@ -27,7 +28,7 @@ const SigninScreen = ({ navigation }: any) => {
         translucent
       />
       <Separator height={StatusBar.currentHeight} />
-      <View>
+      <View style={styles.headerContainer}>
         <Ionicons
           name="chevron-back-outline"
           size={30}
@@ -91,8 +92,11 @@ const SigninScreen = ({ navigation }: any) => {
           <ToggleButton size={0.5} />
           <Text style={styles.rememberMeText}>Nhớ mật khẩu</Text>
         </View>
-        <Text style={styles.forgotPasswordText}> Quên mật khẩu ?</Text>
+        <Text style={styles.forgotPasswordText} onPress={() => navigation.navigate('forgotPass')}> Quên mật khẩu ?</Text>
       </View>
+      <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('registerPhone')}>
+        <Text style={styles.signinSMSText}>Đăng Nhập bằng SMS</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.signinButton} activeOpacity={0.8} onPress={() => login()}>
         <Text style={styles.signinButtonText}>Đăng Nhập</Text>
       </TouchableOpacity>
@@ -129,11 +133,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.DEFAULT_WHITE,
   },
+  headerContainer: {
+    flexDirection: 'row',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
   headerTitle: {
     fontSize: 20,
     // fontFamily: Fonts.POPPINS_MEDIUM,
     lineHeight: 20 * 1.4,
-    // width: Display.setWidth(80),
+    width: Dimensions.setWidth(80),
     textAlign: 'center',
   },
   // title: {
@@ -285,6 +294,13 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 13 * 1.4,
     fontFamily: Fonts.POPPINS_MEDIUM,
+  },
+  signinSMSText: {
+    textAlign: 'right',
+    marginHorizontal: 30,
+    color: Colors.DEFAULT_YELLOW,
+    fontSize: 13,
+    marginVertical: 5,
   },
 });
 export default SigninScreen;
