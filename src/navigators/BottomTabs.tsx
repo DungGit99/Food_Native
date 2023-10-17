@@ -1,10 +1,11 @@
 /* eslint-disable react/no-unstable-nested-components */
-/* eslint-disable prettier/prettier */
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import { Colors } from '../contants';
 import { Colors } from '../constants/Colors';
+import Dimensions from '../constants/Dimensions';
 import AccountScreen from '../screens/AccountScreen';
 import BookmarkScreen from '../screens/BookmarkScreen';
 import CartScreen from '../screens/CartScreen';
@@ -22,7 +23,7 @@ export default () => (
         position: 'absolute',
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
-        // height: Display.setHeight(8),
+        height: Dimensions.setHeight(8),
         backgroundColor: Colors.DEFAULT_WHITE,
         borderTopWidth: 0,
       },

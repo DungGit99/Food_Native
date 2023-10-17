@@ -1,33 +1,93 @@
-/* eslint-disable prettier/prettier */
-import React from 'react';
-import { Image, StatusBar, StyleSheet, View } from 'react-native';
+import LottieView from 'lottie-react-native';
+import React, { useEffect, useRef } from 'react';
+import { Dimensions, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Onboarding from 'react-native-onboarding-swiper';
 import { Colors } from '../constants/Colors';
 
-const SplashScreens = () => {
+const { width } = Dimensions.get('window');
+
+export default function SplashScreens({ navigation }: any) {
+  // const navigation = useNavigation();
+  const animationRef = useRef<LottieView>(null);
+
+  useEffect(() => {
+    animationRef.current?.play();
+
+    // Or set a specific startFrame and endFrame with:
+    animationRef.current?.play(30, 120);
+  }, []);
+  const handleDone = () => {
+    navigation.navigate('HomeTabs');
+    // setItem('onboarded', '1');
+  };
+
+  const doneButton = ({ ...props }) => {
     return (
-        <View style={styles.container}>
-            <StatusBar backgroundColor={Colors.DEFAULT_ORANGE} translucent/>
-            <Image source={require('../assets/images/foodSplash.jpg')} style={styles.image} resizeMode="contain"/>
-        </View>
+      <TouchableOpacity style={styles.doneButton} {...props}>
+        <Text>Done</Text>
+      </TouchableOpacity>
     );
-};
+  };
+  return (
+    <View style={styles.container}>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor={Colors.SECONDARY_RED}
+        translucent
+      />
+      <Onboarding
+        onDone={handleDone}
+        onSkip={handleDone}
+        bottomBarHighlight={false}
+        DoneButtonComponent={doneButton}
+        // containerStyles={{paddingHorizontal: 15}}
+        pages={[
+          {
+            backgroundColor: '#FF6F59',
+            image: (
+              <View >
+                <LottieView style={styles.lottie} source={require('../assets/animations/food_text.json')} autoPlay loop />
+              </View>
+            ),
+            title: '',
+            subtitle: '',
+          },
+          {
+            backgroundColor: '#FF6F59',
+            image: (
+              <View style={styles.lottie}>
+                <LottieView style={styles.lottie} source={require('../assets/animations/food_market.json')} autoPlay loop />
+              </View>
+            ),
+            title: '',
+            subtitle: '',
+          },
+          {
+            backgroundColor: '#FF6F59',
+            image: (
+              <View style={styles.lottie}>
+                <LottieView style={styles.lottie} source={require('../assets/animations/food_delivery.json')} autoPlay loop />
+              </View>
+            ),
+            title: '',
+            subtitle: '',
+          },
+        ]}
+      />
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.DEFAULT_ORANGE,
     flex: 1,
-    justifyContent: 'center',
-    alignContent: 'center',
+    backgroundColor: 'white',
   },
-  image: {
-    height: 200,
-    width: 400,
+  lottie: {
+    width: width * 0.9,
+    height: width,
   },
-  titleText: {
-    color: Colors.DEFAULT_WHITE,
-    fontSize: 22,
-    fontStyle: 'italic',
+  doneButton: {
+    padding: 20,
   },
 });
-
-export default SplashScreens;

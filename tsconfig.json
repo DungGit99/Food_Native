@@ -1,4 +1,10 @@
 {
-  "extends": "@tsconfig/react-native/tsconfig.json"
-  
+    "extends": "@tsconfig/react-native/tsconfig.json",
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true
+    },
+    "baseUrl": "types",
+    "typeRoots": ["types"]
 }

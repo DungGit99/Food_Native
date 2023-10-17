@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 export const Colors = {
     DEFAULT_BLACK: '#0E122B',
     DEFAULT_ORANGE: '#ff7337',

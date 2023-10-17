@@ -1,12 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable prettier/prettier */
+
 import React, { useState } from 'react';
-import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import { FlatList, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CategoryMenu from '../components/CategoryMenu';
+import RestaurantCard from '../components/RestaurantCard';
 import Separator from '../components/Separator';
 import { CATEGORIES } from '../constants/Categories';
 import { Colors } from '../constants/Colors';
@@ -18,8 +19,9 @@ interface propsMenu {
   name: string
 }
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }: any) => {
   const [activeCategory, setActiveCategory] = useState<any>();
+  const [restaurants, setRestaurants] = useState(null);
 
   return (
     <View style={styles.container}>
@@ -82,6 +84,30 @@ const HomeScreen = () => {
           />
         ))}
       </View>
+      <ScrollView style={styles.listContainer}>
+        <View style={styles.horizontalListContainer} >
+          <View style={styles.listHeader}>
+            <Text style={styles.listHeaderTitle}>Top Rated</Text>
+            <Text style={styles.listHeaderSubtitle}>See All</Text>
+          </View>
+          <FlatList
+            data={restaurants}
+            keyExtractor={item => item?.id}
+            horizontal
+            ListHeaderComponent={() => <Separator width={20} />}
+            ListFooterComponent={() => <Separator width={20} />}
+            ItemSeparatorComponent={() => <Separator width={10} />}
+            renderItem={({ item }) => (
+              <RestaurantCard
+                {...item}
+                navigate={(restaurantId: number) =>
+                  navigation.navigate('Restaurant', { restaurantId })
+                }
+              />
+            )}
+          />
+        </View>
+      </ScrollView>
     </View>
 
   );
@@ -169,6 +195,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     marginTop: 20,
   },
+  listContainer: {},
+  horizontalListContainer: {},
+  listHeader: {},
+  listHeaderTitle: {},
+  listHeaderSubtitle: {},
 });
 
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prettier/prettier */
+
 import React, { useState } from 'react';
-import { Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Keyboard, StatusBar, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -21,109 +21,111 @@ const SigninScreen = ({ navigation }: any) => {
   };
   const [isPasswordShow, setIsPasswordShow] = useState(true);
   return (
-    <View style={styles.container}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={Colors.DEFAULT_WHITE}
-        translucent
-      />
-      <Separator height={StatusBar.currentHeight} />
-      <View style={styles.headerContainer}>
-        <Ionicons
-          name="chevron-back-outline"
-          size={30}
-          onPress={() => navigation.goBack()}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor={Colors.DEFAULT_WHITE}
+          translucent
         />
-        <Text style={styles.headerTitle}>Đăng Nhập</Text>
-      </View>
-      <Image source={require('../assets/images/logo.jpg')} style={styles.imageLogo} resizeMode="contain" />
-      {/* input username */}
-      <View style={styles.inputContainer}>
-        <View style={styles.inputSubContainer}>
-          <Feather
-            name="user"
-            size={22}
-            color={Colors.DEFAULT_GREY}
-            style={{ marginRight: 10 }}
+        <Separator height={StatusBar.currentHeight} />
+        <View style={styles.headerContainer}>
+          <Ionicons
+            name="chevron-back-outline"
+            size={30}
+            onPress={() => navigation.goBack()}
           />
-          <TextInput
-            placeholder="Tài khoản"
-            placeholderTextColor={Colors.DEFAULT_GREY}
-            selectionColor={Colors.DEFAULT_GREY}
-            style={styles.inputText}
-            onChangeText={text => setUsername(text)}
-          />
+          <Text style={styles.headerTitle}>Đăng Nhập</Text>
         </View>
-      </View>
-      {/*input password */}
-      <View>
-        <Text />
-      </View>
-      <Separator height={15} />
-      <View style={styles.inputContainer}>
-        <View style={styles.inputSubContainer}>
-          <Feather
-            name="lock"
-            size={22}
-            color={Colors.DEFAULT_GREY}
-            style={{ marginRight: 10 }}
-          />
-          <TextInput
-            secureTextEntry={isPasswordShow}
-            placeholder="Mật khẩu"
-            placeholderTextColor={Colors.DEFAULT_GREY}
-            selectionColor={Colors.DEFAULT_GREY}
-            style={styles.inputText}
-            onChangeText={text => setUsername(text)}
-          />
-          <Feather
-            name={isPasswordShow ? 'eye' : 'eye-off'}
-            size={22}
-            color={Colors.DEFAULT_GREY}
-            style={{ marginRight: 10 }}
-            onPress={() => setIsPasswordShow(!isPasswordShow)}
-          />
-        </View>
-      </View>
-      {/* Quên mật mật khẩu */}
-      <Text style={styles.errorMessage}>{errorMessage}</Text>
-      <View style={styles.forgotPasswordContainer}>
-        <View style={styles.toggleContainer}>
-          <ToggleButton size={0.5} />
-          <Text style={styles.rememberMeText}>Nhớ mật khẩu</Text>
-        </View>
-        <Text style={styles.forgotPasswordText} onPress={() => navigation.navigate('forgotPass')}> Quên mật khẩu ?</Text>
-      </View>
-      <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('registerPhone')}>
-        <Text style={styles.signinSMSText}>Đăng Nhập bằng SMS</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.signinButton} activeOpacity={0.8} onPress={() => login()}>
-        <Text style={styles.signinButtonText}>Đăng Nhập</Text>
-      </TouchableOpacity>
-      <View style={styles.signupContainer}>
-        <Text style={styles.accountText}>Bạn chưa có tài khoản?</Text>
-        <Text style={styles.signupText} onPress={() => navigation.navigate('Signup')}>Đăng ký</Text>
-      </View>
-      <Text style={styles.orText}>Hoặc</Text>
-      <TouchableOpacity style={styles.facebookButton}>
-        <View style={styles.socialButtonsContainer}>
-          <View style={styles.signinButtonLogoContainer}>
-            <Image source={Images.FACEBOOK} style={styles.signinButtonLogo} />
+        <Image source={require('../assets/images/logo.jpg')} style={styles.imageLogo} resizeMode="contain" />
+        {/* input username */}
+        <View style={styles.inputContainer}>
+          <View style={styles.inputSubContainer}>
+            <Feather
+              name="user"
+              size={22}
+              color={Colors.DEFAULT_GREY}
+              style={{ marginRight: 10 }}
+            />
+            <TextInput
+              placeholder="Tài khoản"
+              placeholderTextColor={Colors.DEFAULT_GREY}
+              selectionColor={Colors.DEFAULT_GREY}
+              style={styles.inputText}
+              onChangeText={text => setUsername(text)}
+            />
           </View>
-          <Text style={styles.socialSigninButtonText}>
-            Tiếp tục với Facebook
-          </Text>
         </View>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.googleButton}>
-        <View style={styles.socialButtonsContainer}>
-          <View style={styles.signinButtonLogoContainer}>
-            <Image source={Images.GOOGLE} style={styles.signinButtonLogo} />
+        {/*input password */}
+        <View>
+          <Text />
+        </View>
+        <Separator height={15} />
+        <View style={styles.inputContainer}>
+          <View style={styles.inputSubContainer}>
+            <Feather
+              name="lock"
+              size={22}
+              color={Colors.DEFAULT_GREY}
+              style={{ marginRight: 10 }}
+            />
+            <TextInput
+              secureTextEntry={isPasswordShow}
+              placeholder="Mật khẩu"
+              placeholderTextColor={Colors.DEFAULT_GREY}
+              selectionColor={Colors.DEFAULT_GREY}
+              style={styles.inputText}
+              onChangeText={text => setUsername(text)}
+            />
+            <Feather
+              name={isPasswordShow ? 'eye' : 'eye-off'}
+              size={22}
+              color={Colors.DEFAULT_GREY}
+              style={{ marginRight: 10 }}
+              onPress={() => setIsPasswordShow(!isPasswordShow)}
+            />
           </View>
-          <Text style={styles.socialSigninButtonText}>Tiếp tục với Google</Text>
         </View>
-      </TouchableOpacity>
-    </View>
+        {/* Quên mật mật khẩu */}
+        <Text style={styles.errorMessage}>{errorMessage}</Text>
+        <View style={styles.forgotPasswordContainer}>
+          <View style={styles.toggleContainer}>
+            <ToggleButton size={0.5} />
+            <Text style={styles.rememberMeText}>Nhớ mật khẩu</Text>
+          </View>
+          <Text style={styles.forgotPasswordText} onPress={() => navigation.navigate('forgotPass')}> Quên mật khẩu ?</Text>
+        </View>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('registerPhone')}>
+          <Text style={styles.signinSMSText}>Đăng Nhập bằng SMS</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.signinButton} activeOpacity={0.8} onPress={() => login()}>
+          <Text style={styles.signinButtonText}>Đăng Nhập</Text>
+        </TouchableOpacity>
+        <View style={styles.signupContainer}>
+          <Text style={styles.accountText}>Bạn chưa có tài khoản?</Text>
+          <Text style={styles.signupText} onPress={() => navigation.navigate('Signup')}>Đăng ký</Text>
+        </View>
+        <Text style={styles.orText}>Hoặc</Text>
+        <TouchableOpacity style={styles.facebookButton}>
+          <View style={styles.socialButtonsContainer}>
+            <View style={styles.signinButtonLogoContainer}>
+              <Image source={Images.FACEBOOK} style={styles.signinButtonLogo} />
+            </View>
+            <Text style={styles.socialSigninButtonText}>
+              Tiếp tục với Facebook
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.googleButton}>
+          <View style={styles.socialButtonsContainer}>
+            <View style={styles.signinButtonLogoContainer}>
+              <Image source={Images.GOOGLE} style={styles.signinButtonLogo} />
+            </View>
+            <Text style={styles.socialSigninButtonText}>Tiếp tục với Google</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

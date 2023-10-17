@@ -6,4 +6,5 @@ export const Images: any = {
     DRINKS: require('../assets/images/cocktail.png'),
     EAT: require('../assets/images/fast-food.png'),
     RICE: require('../assets/images/rice.png'),
+    AVATAR: require('../assets/images/avatar.png'),
 };

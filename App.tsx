@@ -1,9 +1,14 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 
+import store from './src/app/store';
 import Navigators from './src/navigators';
 
-function App(): JSX.Element {
-    return <Navigators />;
-}
-
+export const App = () => {
+    return (
+        <Provider store={store}>
+            <Navigators />
+        </Provider>
+    );
+};
 export default App;

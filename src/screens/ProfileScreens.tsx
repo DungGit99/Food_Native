@@ -1,96 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import {
   Image,
   StatusBar,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // import { Separator, ToggleButton } from '../components';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { launchImageLibrary } from 'react-native-image-picker';
 import Separator from '../components/Separator';
 import { Colors } from '../constants/Colors';
 import Dimensions from '../constants/Dimensions';
 import { Fonts } from '../constants/Fonts';
 import { Images } from '../constants/Images';
-// import { Colors, Fonts, Images } from '../contants';
-export default function AccountScreen({ navigation }: any) {
-
-
-  const logout = () => {
-
+const ProfileScreens = ({ navigation }: any) => {
+  const [selectImage, setSelectImage] = useState('');
+  const uploadImage = () => {
+    let options = {
+      storageOptions: {
+        path: 'image',
+      },
+    } as any;
+    launchImageLibrary(options, res => {
+      setSelectImage(res.assets[0].uri);
+    });
   };
-
+  console.log(selectImage);
   return (
     <View style={styles.container}>
       <StatusBar
-        barStyle="light-content"
+        barStyle="dark-content"
         backgroundColor={Colors.DEFAULT_ORANGE}
         translucent
       />
       <Separator height={StatusBar.currentHeight} />
-      <View style={styles.backgroundCurvedContainer} />
-      <View style={styles.headerContainer}>
-        <Ionicons
-          name="chevron-back-outline"
-          size={20}
-          color={Colors.DEFAULT_WHITE}
-          onPress={() => navigation.goBack()}
-        />
-        <Text style={styles.headerText} />
-        <View>
-          <Feather name="bell" size={20} color={Colors.DEFAULT_WHITE} />
-          <View style={styles.alertBadge}>
-            <Text style={styles.alertBadgeText}>12</Text>
+      <View>
+        <View style={styles.backgroundCurvedContainer} />
+        {/* title  */}
+        <View style={styles.headerContainer}>
+          <Ionicons
+            name="chevron-back-outline"
+            size={20}
+            color={Colors.DEFAULT_WHITE}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={styles.headerTitle}>Sửa thông tin 1</Text>
+          <View>
+            <View >
+              <Text style={styles.saveProfileText}>Lưu</Text>
+            </View>
           </View>
         </View>
-      </View>
-      <View style={styles.profileHeaderContainer}>
-        <View style={styles.profileImageContainer}>
-          <Image style={styles.profileImage} source={Images.AVATAR} />
+        <Separator height={StatusBar.currentHeight} />
+        <View style={styles.profileHeaderContainer}>
+          <View style={styles.profileImageContainer}>
+            <Image style={styles.profileImage} source={selectImage === '' ? Images.AVATAR : { uri: selectImage }} />
+            <TouchableOpacity onPress={uploadImage} style={styles.uploadImage} activeOpacity={0.8}>
+              <View style={{ ...styles.menuIcon, backgroundColor: Colors.DARK_THREE }}>
+                <MaterialCommunityIcons
+                  name="camera"
+                  size={18}
+                  color={Colors.SECONDARY_WHITE}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.profileTextContainer}>
-          <Text style={styles.nameText}>Dũng</Text>
-          <Text style={styles.emailText}>vandungcode@gmail.com</Text>
-        </View>
-      </View>
-      <View style={styles.menuContainer}>
-        <TouchableOpacity style={styles.menuItem} activeOpacity={0.8}>
-          <View style={{ ...styles.menuIcon, backgroundColor: Colors.LIGHT_RED }}>
-            <MaterialCommunityIcons
-              name="note-text-outline"
-              size={18}
-              color={Colors.SECONDARY_RED}
-            />
-          </View>
-          <Text style={styles.menuText}>Đơn hàng</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem} activeOpacity={0.8}>
-          <View style={styles.menuIcon}>
-            <MaterialCommunityIcons
-              name="truck-fast-outline"
-              size={18}
-              color={Colors.DEFAULT_ORANGE}
-            />
-          </View>
-          {/* <Text style={styles.menuText}>My All {'\n'}Orders</Text> */}
-          <Text style={styles.menuText}>Đang giao</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.menuItem} activeOpacity={0.8}>
-          <View
-            style={{ ...styles.menuIcon, backgroundColor: Colors.LIGHT_YELLOW }}>
-            <MaterialCommunityIcons
-              name="star-circle-outline"
-              size={18}
-              color={Colors.DEFAULT_YELLOW}
-            />
-          </View>
-          <Text style={styles.menuText}>Đánh giá</Text>
-        </TouchableOpacity>
       </View>
       <View style={styles.mainContainer}>
         {/* <Text style={styles.sectionHeaderText}>My Account</Text> */}
@@ -101,7 +81,7 @@ export default function AccountScreen({ navigation }: any) {
               size={18}
               color={Colors.DEFAULT_ORANGE}
             />
-            <Text style={styles.sectionText}>Thông tin người dùng</Text>
+            <Text style={styles.sectionText}>Dũng</Text>
           </View>
           <Feather
             name="chevron-right"
@@ -113,11 +93,11 @@ export default function AccountScreen({ navigation }: any) {
         <TouchableOpacity style={styles.sectionContainer} activeOpacity={0.8}>
           <View style={styles.sectionTextContainer}>
             <MaterialCommunityIcons
-              name="map-marker-radius"
+              name="lock-outline"
               size={18}
               color={Colors.DEFAULT_ORANGE}
             />
-            <Text style={styles.sectionText}>Địa chỉ giao hàng</Text>
+            <Text style={styles.sectionText}>Mật khẩu</Text>
           </View>
           <Feather
             name="chevron-right"
@@ -127,21 +107,25 @@ export default function AccountScreen({ navigation }: any) {
         </TouchableOpacity>
         <TouchableOpacity style={styles.sectionContainer} activeOpacity={0.8}>
           <View style={styles.sectionTextContainer}>
-            <Ionicons
-              name="card-outline"
+            <MaterialCommunityIcons
+              name="email-outline"
               size={18}
               color={Colors.DEFAULT_ORANGE}
             />
-            <Text style={styles.sectionText}>Thanh toán</Text>
+            <Text style={styles.sectionText}>vandungcode@gmail.com</Text>
           </View>
-
+          <Feather
+            name="chevron-right"
+            color={Colors.INACTIVE_GREY}
+            size={20}
+          />
         </TouchableOpacity>
 
         {/* <Text style={styles.sectionHeaderText}>Notification</Text> */}
         <View style={styles.sectionContainer} >
           <View style={styles.sectionTextContainer}>
-            <Feather name="bell" size={18} color={Colors.DEFAULT_ORANGE} />
-            <Text style={styles.sectionText}>Thông báo</Text>
+            <Feather name="phone-call" size={18} color={Colors.DEFAULT_ORANGE} />
+            <Text style={styles.sectionText}>0929588983</Text>
           </View>
           {/* <ToggleButton size={0.5} /> */}
         </View>
@@ -152,32 +136,26 @@ export default function AccountScreen({ navigation }: any) {
           </View>
           <ToggleButton size={0.5} />
         </View> */}
-        <TouchableOpacity style={styles.sectionContainer} activeOpacity={0.8}>
+        <View style={styles.sectionContainer}>
           <View style={styles.sectionTextContainer}>
             <MaterialCommunityIcons
-              name="chat-processing-outline"
+              name="map-marker"
               size={18}
               color={Colors.DEFAULT_ORANGE}
             />
-            <Text style={styles.sectionText}>Trò chuyện cùng FOOD</Text>
+            <Text style={styles.sectionText}>106 Hồ Quý Ly</Text>
           </View>
-          <Feather
-            name="chevron-right"
-            color={Colors.INACTIVE_GREY}
-            size={20}
-            onPress={() => navigation.navigate('chatfood')}
-          />
           {/* <ToggleButton size={0.5} /> */}
-        </TouchableOpacity>
+        </View>
         {/* <Text style={styles.sectionHeaderText}>More</Text> */}
         <View style={styles.sectionContainer}>
           <View style={styles.sectionTextContainer}>
             <MaterialCommunityIcons
-              name="help-circle-outline"
+              name="cake-variant-outline"
               size={18}
               color={Colors.DEFAULT_ORANGE}
             />
-            <Text style={styles.sectionText}>Trung tâm trợ giúp</Text>
+            <Text style={styles.sectionText}>09/09/1997</Text>
           </View>
           {/* <ToggleButton size={0.5} /> */}
         </View>
@@ -185,19 +163,19 @@ export default function AccountScreen({ navigation }: any) {
           <TouchableOpacity
             style={styles.sectionTextContainer}
             activeOpacity={0.8}
-            onPress={() => logout()}>
+          >
             <MaterialCommunityIcons
-              name="logout"
+              name="human-male-female"
               size={18}
               color={Colors.DEFAULT_ORANGE}
             />
-            <Text style={styles.sectionText}>Đăng xuất</Text>
+            <Text style={styles.sectionText}>Giới tính</Text>
           </TouchableOpacity>
         </View>
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -210,107 +188,64 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -1 * (2000 - 230),
     width: 2000,
-    borderRadius: 2000,
+    // borderRadius: 2000,
     alignSelf: 'center',
     zIndex: -1,
   },
   headerContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
-  headerText: {
+  headerTitle: {
     fontSize: 20,
     fontFamily: Fonts.POPPINS_MEDIUM,
     lineHeight: 20 * 1.4,
+    width: Dimensions.setWidth(80),
+    textAlign: 'center',
     color: Colors.DEFAULT_WHITE,
   },
-  alertBadge: {
-    backgroundColor: Colors.DEFAULT_YELLOW,
-    position: 'absolute',
-    height: 16,
-    width: 16,
-    borderRadius: 32,
-    justifyContent: 'center',
-    alignItems: 'center',
-    right: -2,
-    top: -10,
-  },
-  alertBadgeText: {
-    fontSize: 10,
-    fontFamily: Fonts.POPPINS_BOLD,
-    lineHeight: 10 * 1.4,
+  saveProfileText: {
     color: Colors.DEFAULT_WHITE,
   },
   profileHeaderContainer: {
     marginHorizontal: 20,
-    flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 10,
+    // marginTop: 30,
   },
   profileImageContainer: {
-    backgroundColor: Colors.DEFAULT_WHITE,
-    borderRadius: 32,
+    // position: 'relative',
+    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
-    padding: 1,
-    elevation: 3,
+    // alignItems: 'center',
+    // padding: 1,
   },
   profileImage: {
-    width: Dimensions.setWidth(15),
-    height: Dimensions.setWidth(15),
-    borderRadius: 32,
+    position: 'absolute',
+    width: Dimensions.setWidth(24),
+    height: Dimensions.setWidth(24),
+    borderRadius: 50,
+    borderColor: Colors.DARK_FIVE,
   },
-  profileTextContainer: {
-    marginLeft: 10,
-  },
-  nameText: {
-    fontSize: 14,
-    fontFamily: Fonts.POPPINS_REGULAR,
-    lineHeight: 14 * 1.4,
-    color: Colors.DEFAULT_WHITE,
-  },
-  emailText: {
-    fontSize: 10,
-    fontFamily: Fonts.POPPINS_REGULAR,
-    lineHeight: 10 * 1.4,
-    color: Colors.DEFAULT_WHITE,
-  },
-  menuContainer: {
-    backgroundColor: Colors.DEFAULT_WHITE,
-    borderRadius: 10,
-    marginHorizontal: 20,
+  uploadImage: {
+    marginLeft: 100,
     marginTop: 20,
-    elevation: 3,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 20,
-  },
-  menuItem: {
-    flex: 1,
-    alignItems: 'center',
   },
   menuIcon: {
+    // position: 'absolute',
     backgroundColor: Colors.LIGHT_GREEN,
     height: Dimensions.setWidth(8),
     width: Dimensions.setWidth(8),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 32,
+    // marginRight: 0,
   },
-  menuText: {
-    fontSize: 12,
-    fontFamily: Fonts.POPPINS_SEMI_BOLD,
-    lineHeight: 12 * 1.4,
-    color: Colors.DEFAULT_BLACK,
-    textAlign: 'center',
-    marginTop: 5,
-  },
+  //
   mainContainer: {
     marginHorizontal: 20,
-    marginTop: 10,
+    marginTop: 120,
     backgroundColor: Colors.DEFAULT_WHITE,
     elevation: 3,
     paddingHorizontal: 20,
@@ -342,3 +277,5 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
+
+export default ProfileScreens;

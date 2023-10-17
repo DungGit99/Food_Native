@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, StyleSheet, View } from 'react-native';
 import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
-const BookmarkScreen = () => {
+const Reanimated = () => {
 	const width = useSharedValue(100);
 	const handlePress = () => {
 		width.value = withSpring(width.value + 50);
@@ -20,11 +20,11 @@ const BookmarkScreen = () => {
 	);
 };
 
-export default BookmarkScreen;
+export default Reanimated;
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1, alignItems: 'center', justifyContent: 'center',
+		flex: 1, alignItems: 'center',
 	},
 
 });

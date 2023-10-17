@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- react native maps -->
+     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
       android:name=".MainApplication"
@@ -21,5 +22,10 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+        <!-- You will only need to add this meta-data tag, but make sure it's a child of application -->
+        <meta-data
+          android:name="com.google.android.geo.API_KEY"
+          android:value="AIzaSyC0OZDGYx1jVLWMk2EO3-zBz7N-60f5fzw"/>
+
     </application>
 </manifest>
